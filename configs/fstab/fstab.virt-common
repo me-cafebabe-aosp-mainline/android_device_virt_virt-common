@@ -5,7 +5,7 @@
 /dev/block/by-name/misc /misc emmc defaults defaults
 
 # Metadata
-/dev/block/by-name/metadata /metadata ext4 nodev,noatime,nosuid,discard check,formattable,first_stage_mount
+/dev/block/by-name/metadata /metadata ext4 nodev,noatime,nosuid,discard check,formattable,first_stage_mount,metadata_csum
 
 # Firmware
 /dev/block/by-name/firmware /vendor/firmware_mnt vfat rw,shortname=lower,uid=0,gid=1000,dmask=007,fmask=117,context=u:object_r:firmware_file:s0 nofail
