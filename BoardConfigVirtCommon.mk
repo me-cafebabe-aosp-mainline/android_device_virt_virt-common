@@ -138,7 +138,8 @@ SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(VIRT_COMMON_PATH)/sepolicy/private
 
 # VINTF
 DEVICE_MANIFEST_FILE := \
-    $(VIRT_COMMON_PATH)/config/manifest.xml
+    $(VIRT_COMMON_PATH)/config/manifest.xml \
+    device/google/cuttlefish/guest/hals/audio/effects/manifest.xml
 
 # Wi-Fi
 BOARD_HOSTAPD_DRIVER := NL80211
