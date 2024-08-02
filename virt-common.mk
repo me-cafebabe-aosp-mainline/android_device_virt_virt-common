@@ -61,7 +61,7 @@ PRODUCT_COPY_FILES += \
 
 # Fastbootd
 PRODUCT_PACKAGES += \
-    android.hardware.fastboot-service.virt_recovery \
+    android.hardware.fastboot@1.1-impl-virt \
     fastbootd
 
 # First stage console
