@@ -80,8 +80,8 @@ $(call inherit-product, device/google/cuttlefish/shared/swiftshader/device_vendo
 
 # Health
 PRODUCT_PACKAGES += \
-    android.hardware.health-service.cuttlefish_recovery \
-    com.google.cf.health
+    android.hardware.health-service.cuttlefish \
+    android.hardware.health-service.cuttlefish_recovery
 
 # Init
 PRODUCT_COPY_FILES += \

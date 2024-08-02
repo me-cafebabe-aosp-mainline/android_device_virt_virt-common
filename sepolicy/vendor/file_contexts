@@ -9,6 +9,7 @@
 /vendor/bin/tablet2multitouch						u:object_r:tablet2multitouch_exec:s0
 /vendor/bin/wakeupd							u:object_r:wakeupd_exec:s0
 /vendor/bin/hw/android\.hardware\.gatekeeper@1\.0-service.software	u:object_r:hal_gatekeeper_default_exec:s0
+/vendor/bin/hw/android\.hardware\.health-service\.cuttlefish		u:object_r:hal_health_default_exec:s0
 
 # Firmware
 /vendor/firmware_mnt(/.*)?		u:object_r:firmware_file:s0
