@@ -18,7 +18,7 @@
 #include <recovery_ui/ethernet_device.h>
 #include <recovery_ui/ethernet_ui.h>
 
-class VirtioRecoveryUI : public EthernetRecoveryUI {
+class VirtRecoveryUI : public EthernetRecoveryUI {
   public:
     bool IsUsbConnected() override {
       return true;
@@ -27,5 +27,5 @@ class VirtioRecoveryUI : public EthernetRecoveryUI {
 
 Device* make_device() {
     std::string eth_device = android::base::GetProperty("vendor.recovery.ethernet.dhcp.iface", "eth0");
-    return new EthernetDevice(new VirtioRecoveryUI, eth_device);
+    return new EthernetDevice(new VirtRecoveryUI, eth_device);
 }

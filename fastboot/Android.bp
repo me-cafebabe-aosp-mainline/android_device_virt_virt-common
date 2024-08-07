@@ -14,9 +14,9 @@
 // limitations under the License.
 
 cc_binary {
-    name: "android.hardware.fastboot-service.virtio_recovery",
-    init_rc: ["android.hardware.fastboot-service.virtio_recovery.rc"],
-    vintf_fragments: ["android.hardware.fastboot-service.virtio.xml"],
+    name: "android.hardware.fastboot-service.virt_recovery",
+    init_rc: ["android.hardware.fastboot-service.virt_recovery.rc"],
+    vintf_fragments: ["android.hardware.fastboot-service.virt.xml"],
     recovery: true,
     srcs: [
         "Fastboot.cpp",

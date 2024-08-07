@@ -6,7 +6,7 @@
 
 LOCAL_PATH := $(call my-dir)
 
-ifeq ($(USES_DEVICE_VIRT_VIRTIO_COMMON),true)
+ifeq ($(USES_DEVICE_VIRT_VIRT_COMMON),true)
 
 # Combine ramdisk
 INSTALLED_COMBINED_RAMDISK_TARGET := $(PRODUCT_OUT)/combined-ramdisk.img
@@ -82,7 +82,7 @@ INSTALLED_ESPIMAGE_INSTALL_TARGET_DEPS := \
 # $(2): list of contents to include
 # $(3): purpose
 define create-espimage
-	/bin/dd if=/dev/zero of=$(1) bs=1M count=$$($(COMMON_PATH)/.calc_fat32_img_size.sh $(2))
+	/bin/dd if=/dev/zero of=$(1) bs=1M count=$$($(VIRT_COMMON_PATH)/.calc_fat32_img_size.sh $(2))
 	$(BOOTMGR_TOOLS_LINEAGE_BIN_DIR)/mformat -F -i $(1) -v "$(3)" ::
 	$(foreach content,$(2),$(BOOTMGR_TOOLS_LINEAGE_BIN_DIR)/mcopy -i $(1) -s $(content) :: &&)true
 endef
@@ -185,7 +185,7 @@ DISK_VDA_WRITE_PARTITIONS := \
 define make-diskimage-target
 	$(call pretty,"Target $(2) disk image: $(1)")
 	/bin/dd if=/dev/zero of=$(1) bs=$(DISK_$(call to-upper,$(2))_SECTOR_SIZE) count=$(DISK_$(call to-upper,$(2))_SECTORS)
-	/bin/sh -e $(COMMON_PATH)/config/create_partition_table.sh $(SGDISK_EXEC) $(1) $(2) $(BOARD_SUPER_PARTITION_SIZE)
+	/bin/sh -e $(VIRT_COMMON_PATH)/config/create_partition_table.sh $(SGDISK_EXEC) $(1) $(2) $(BOARD_SUPER_PARTITION_SIZE)
 	$(foreach p,$(DISK_$(call to-upper,$(2))_WRITE_PARTITIONS),\
 		/bin/dd if=$(PRODUCT_OUT)/$(p).img of=$(1) bs=$(DISK_$(call to-upper,$(2))_SECTOR_SIZE) seek=$(DISK_$(call to-upper,$(2))_PARTITION_$(call to-upper,$(p))_START_SECTOR) count=$(DISK_$(call to-upper,$(2))_PARTITION_$(call to-upper,$(p))_SECTORS) conv=notrunc &&\
 	)true

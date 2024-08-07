@@ -4,8 +4,8 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-USES_DEVICE_VIRT_VIRTIO_COMMON := true
-COMMON_PATH := device/virt/virtio-common
+USES_DEVICE_VIRT_VIRT_COMMON := true
+VIRT_COMMON_PATH := device/virt/virt-common
 
 # Bootloader
 BOARD_BOOT_HEADER_VERSION := 3
@@ -13,7 +13,7 @@ BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
 TARGET_NO_BOOTLOADER := true
 
 # Fastboot
-TARGET_BOARD_FASTBOOT_INFO_FILE := $(COMMON_PATH)/fastboot-info.txt
+TARGET_BOARD_FASTBOOT_INFO_FILE := $(VIRT_COMMON_PATH)/fastboot-info.txt
 
 # Filesystem
 BOARD_EXT4_SHARE_DUP_BLOCKS :=
@@ -37,8 +37,8 @@ endif
 include device/google/cuttlefish/shared/swiftshader/BoardConfig.mk
 
 # Init
-TARGET_INIT_VENDOR_LIB ?= //$(COMMON_PATH):init_virtio
-TARGET_RECOVERY_DEVICE_MODULES ?= init_virtio
+TARGET_INIT_VENDOR_LIB ?= //$(VIRT_COMMON_PATH):init_virt
+TARGET_RECOVERY_DEVICE_MODULES ?= init_virt
 
 # Kernel
 BOARD_KERNEL_CMDLINE := \
@@ -50,12 +50,12 @@ BOARD_KERNEL_CMDLINE := \
     androidboot.boot_devices=any \
     androidboot.console=hvc0 \
     androidboot.first_stage_console=0 \
-    androidboot.hardware=virtio \
+    androidboot.hardware=virt \
     androidboot.verifiedbootstate=orange
 
 ifneq ($(wildcard $(TARGET_KERNEL_SOURCE)/Makefile),)
 BOARD_VENDOR_KERNEL_MODULES_LOAD := \
-    $(strip $(shell cat $(wildcard $(COMMON_PATH)/config/modules.load.vendor.*)))
+    $(strip $(shell cat $(wildcard $(VIRT_COMMON_PATH)/config/modules.load.vendor.*)))
 TARGET_KERNEL_CONFIG := \
     gki_defconfig \
     lineageos/virtio.config \
@@ -113,9 +113,9 @@ else
     $(error TARGET_LOGICAL_PARTITIONS_FILE_SYSTEM_TYPE is invalid)
 endif
 
-BOARD_SUPER_PARTITION_GROUPS := virtio_dynamic_partitions
-BOARD_VIRTIO_DYNAMIC_PARTITIONS_PARTITION_LIST := $(ALL_PARTITIONS)
-BOARD_VIRTIO_DYNAMIC_PARTITIONS_SIZE := $(shell expr $(BOARD_SUPER_PARTITION_SIZE) - 4194304 )
+BOARD_SUPER_PARTITION_GROUPS := virt_dynamic_partitions
+BOARD_VIRT_DYNAMIC_PARTITIONS_PARTITION_LIST := $(ALL_PARTITIONS)
+BOARD_VIRT_DYNAMIC_PARTITIONS_SIZE := $(shell expr $(BOARD_SUPER_PARTITION_SIZE) - 4194304 )
 
 $(foreach p, $(call to-upper, $(ALL_PARTITIONS)), \
     $(eval BOARD_$(p)IMAGE_FILE_SYSTEM_TYPE := $(TARGET_LOGICAL_PARTITIONS_FILE_SYSTEM_TYPE)) \
@@ -127,16 +127,16 @@ BOARD_EFI_IMAGE_LIST := $(PRODUCT_OUT)/obj/CUSTOM_IMAGES/EFI.img
 endif
 
 # Platform
-TARGET_BOARD_PLATFORM := virtio
+TARGET_BOARD_PLATFORM := virt
 
 # Properties
-TARGET_PRODUCT_PROP := $(COMMON_PATH)/properties/product.prop
-TARGET_VENDOR_PROP := $(COMMON_PATH)/properties/vendor.prop
+TARGET_PRODUCT_PROP := $(VIRT_COMMON_PATH)/properties/product.prop
+TARGET_VENDOR_PROP := $(VIRT_COMMON_PATH)/properties/vendor.prop
 
 ifneq ($(PRODUCT_IS_ATV),true)
 ifneq ($(PRODUCT_IS_AUTOMOTIVE),true)
 TARGET_VENDOR_PROP += \
-    $(COMMON_PATH)/properties/vendor_bluetooth_profiles.prop
+    $(VIRT_COMMON_PATH)/properties/vendor_bluetooth_profiles.prop
 endif
 endif
 
@@ -144,12 +144,12 @@ endif
 BOARD_RAMDISK_USE_LZ4 := true
 
 # Recovery
-TARGET_RECOVERY_FSTAB := $(COMMON_PATH)/config/fstab.virtio
+TARGET_RECOVERY_FSTAB := $(VIRT_COMMON_PATH)/config/fstab.virt
 TARGET_RECOVERY_PIXEL_FORMAT := ARGB_8888
-TARGET_RECOVERY_UI_LIB := librecovery_ui_virtio
+TARGET_RECOVERY_UI_LIB := librecovery_ui_virt
 
 # Releasetools
-TARGET_RELEASETOOLS_EXTENSIONS := $(COMMON_PATH)
+TARGET_RELEASETOOLS_EXTENSIONS := $(VIRT_COMMON_PATH)
 
 # RIL
 ENABLE_VENDOR_RIL_SERVICE := true
@@ -159,18 +159,18 @@ VENDOR_SECURITY_PATCH = $(PLATFORM_SECURITY_PATCH)
 
 # SELinux
 BOARD_VENDOR_SEPOLICY_DIRS := \
-    $(COMMON_PATH)/sepolicy/vendor \
+    $(VIRT_COMMON_PATH)/sepolicy/vendor \
     device/google/cuttlefish/shared/graphics/sepolicy \
     device/google/cuttlefish/shared/swiftshader/sepolicy \
     device/google/cuttlefish/shared/virgl/sepolicy \
     external/minigbm/cros_gralloc/sepolicy
 
-SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(COMMON_PATH)/sepolicy/private
-SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS += $(COMMON_PATH)/sepolicy/public
+SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(VIRT_COMMON_PATH)/sepolicy/private
+SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS += $(VIRT_COMMON_PATH)/sepolicy/public
 
 # VINTF
 DEVICE_MANIFEST_FILE := \
-    $(COMMON_PATH)/config/manifest.xml
+    $(VIRT_COMMON_PATH)/config/manifest.xml
 
 # Wi-Fi
 BOARD_HOSTAPD_DRIVER := NL80211

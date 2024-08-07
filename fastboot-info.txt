@@ -1,4 +1,4 @@
-# fastboot-info for virtio
+# fastboot-info for virt-common
 version 1
 
 flash EFI

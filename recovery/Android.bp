@@ -19,7 +19,7 @@ package {
 }
 
 cc_library {
-    name: "librecovery_ui_virtio",
+    name: "librecovery_ui_virt",
     cflags: [
         "-Wall",
         "-Wextra",

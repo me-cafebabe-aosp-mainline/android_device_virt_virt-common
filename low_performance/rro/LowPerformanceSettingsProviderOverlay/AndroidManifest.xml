@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.lineageos.device.virt.virtio.overlay.low_performance.settingsprovider"
+    package="org.lineageos.device.virt.overlay.low_performance.settingsprovider"
     android:versionCode="1"
     android:versionName="1.0">
     <application android:hasCode="false" />

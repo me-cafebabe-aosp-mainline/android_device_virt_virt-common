@@ -44,7 +44,7 @@ $(call inherit-product, frameworks/native/build/tablet-10in-xhdpi-2048-dalvik-he
 
 # DHCP client
 PRODUCT_PACKAGES += \
-    virtio_dhcpclient.recovery
+    virt_dhcpclient.recovery
 
 # DLKM Loader
 PRODUCT_PACKAGES += \
@@ -56,7 +56,7 @@ PRODUCT_COPY_FILES += \
 
 # Fastbootd
 PRODUCT_PACKAGES += \
-    android.hardware.fastboot-service.virtio_recovery \
+    android.hardware.fastboot-service.virt_recovery \
     fastbootd
 
 # First stage console
@@ -129,13 +129,13 @@ endif
 
 # Init
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/config/init.virtio.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.virtio.rc \
+    $(LOCAL_PATH)/config/init.virt.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.virt.rc \
     $(LOCAL_PATH)/config/ueventd.rc:$(TARGET_COPY_OUT_VENDOR)/etc/ueventd.rc
 
 PRODUCT_PACKAGES += \
-    fstab.virtio \
-    fstab.virtio.gsi.sda \
-    fstab.virtio.gsi.vdc
+    fstab.virt \
+    fstab.virt.gsi.sda \
+    fstab.virt.gsi.vdc
 
 # Input
 PRODUCT_COPY_FILES += \
@@ -217,7 +217,7 @@ endif
 # Recovery
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/config/create_partition_table.sh:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/create_partition_table.sh \
-    $(LOCAL_PATH)/config/init.recovery.virtio.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.virtio.rc \
+    $(LOCAL_PATH)/config/init.recovery.virt.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.virt.rc \
     $(LOCAL_PATH)/config/ueventd.rc:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/etc/ueventd.rc \
     $(LOCAL_PATH)/rEFInd/refind-update-default_selection.sh:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/refind-update-default_selection.sh \
     device/google/cuttlefish/shared/config/cgroups.json:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/etc/cgroups.json
@@ -253,9 +253,9 @@ PRODUCT_PACKAGES += \
 
 # Vendor ramdisk
 PRODUCT_PACKAGES += \
-    fstab.virtio.vendor_ramdisk \
-    fstab.virtio.gsi.sda.vendor_ramdisk \
-    fstab.virtio.gsi.vdc.vendor_ramdisk
+    fstab.virt.vendor_ramdisk \
+    fstab.virt.gsi.sda.vendor_ramdisk \
+    fstab.virt.gsi.vdc.vendor_ramdisk
 
 # VirtWifi
 PRODUCT_PACKAGES += \

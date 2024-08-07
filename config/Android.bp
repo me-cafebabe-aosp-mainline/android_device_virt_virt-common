@@ -1,36 +1,36 @@
 prebuilt_etc {
-    name: "fstab.virtio",
-    src: "fstab.virtio",
+    name: "fstab.virt",
+    src: "fstab.virt",
     vendor: true,
     vendor_ramdisk_available: true,
 }
 
 genrule {
-    name: "gen_fstab_virtio_gsi_sda",
-    srcs: ["fstab.virtio"],
-    out: ["fstab.virtio.gsi.sda"],
+    name: "gen_fstab_virt_gsi_sda",
+    srcs: ["fstab.virt"],
+    out: ["fstab.virt.gsi.sda"],
     tool_files: [ "fstab.sed.gsi.sda" ],
     cmd: "sed -f $(location fstab.sed.gsi.sda) $(in) > $(out)",
 }
 
 genrule {
-    name: "gen_fstab_virtio_gsi_vdc",
-    srcs: ["fstab.virtio"],
-    out: ["fstab.virtio.gsi.vdc"],
+    name: "gen_fstab_virt_gsi_vdc",
+    srcs: ["fstab.virt"],
+    out: ["fstab.virt.gsi.vdc"],
     tool_files: [ "fstab.sed.gsi.vdc" ],
     cmd: "sed -f $(location fstab.sed.gsi.vdc) $(in) > $(out)",
 }
 
 prebuilt_etc {
-    name: "fstab.virtio.gsi.sda",
-    src: ":gen_fstab_virtio_gsi_sda",
+    name: "fstab.virt.gsi.sda",
+    src: ":gen_fstab_virt_gsi_sda",
     vendor: true,
     vendor_ramdisk_available: true,
 }
 
 prebuilt_etc {
-    name: "fstab.virtio.gsi.vdc",
-    src: ":gen_fstab_virtio_gsi_vdc",
+    name: "fstab.virt.gsi.vdc",
+    src: ":gen_fstab_virt_gsi_vdc",
     vendor: true,
     vendor_ramdisk_available: true,
 }
