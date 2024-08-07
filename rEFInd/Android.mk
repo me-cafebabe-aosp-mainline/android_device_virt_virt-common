@@ -34,10 +34,11 @@ endef
 # $(2): dependencies
 # $(3): workdir
 # $(4): purpose (boot or install)
+# $(5): configuration file
 define make-espimage
 	$(call copy-refind-files-to-efi-boot,$(3)/fsroot/EFI/BOOT)
 
-	cp $(COMMON_REFIND_PATH)/refind-$(4).conf $(3)/fsroot/EFI/BOOT/refind.conf
+	cp $(5) $(3)/fsroot/EFI/BOOT/refind.conf
 	$(call process-bootmgr-cfg-common,$(3)/fsroot/EFI/BOOT/refind.conf)
 
 	$(if $(LINEAGE_BUILD),\
@@ -54,7 +55,7 @@ endef
 # $(2): dependencies
 define make-espimage-target
 	$(call pretty,"Target EFI System Partition image: $(1)")
-	$(call make-espimage,$(1),$(2),$(REFIND_WORKDIR_ESP),boot)
+	$(call make-espimage,$(1),$(2),$(REFIND_WORKDIR_ESP),boot,$(TARGET_REFIND_BOOT_CONFIG))
 endef
 
 ##### espimage-install #####
@@ -63,7 +64,7 @@ endef
 # $(2): dependencies (unused for now)
 define make-espimage-install-target
 	$(call pretty,"Target installer ESP image: $(1)")
-	$(call make-espimage,$(1),$(2),$(REFIND_WORKDIR_INSTALL),install)
+	$(call make-espimage,$(1),$(2),$(REFIND_WORKDIR_INSTALL),install,$(TARGET_REFIND_INSTALL_CONFIG))
 endef
 
 endif # TARGET_BOOT_MANAGER
