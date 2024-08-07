@@ -1,15 +1,3 @@
-# Block devices
-/dev/block/sda		u:object_r:system_block_device:s0
-/dev/block/vda2		u:object_r:super_block_device:s0
-/dev/block/vda3		u:object_r:misc_block_device:s0
-/dev/block/vda4		u:object_r:metadata_block_device:s0
-/dev/block/vda5		u:object_r:cache_block_device:s0
-/dev/block/vdb		u:object_r:userdata_block_device:s0
-/dev/block/vdc		u:object_r:system_block_device:s0
-
-# Console
-/dev/hvc[0-9]+		u:object_r:console_device:s0
-
 # Executables
 /vendor/bin/dlkm_loader							u:object_r:dlkm_loader_exec:s0
 /vendor/bin/refind-update-default_selection.sh				u:object_r:vendor_efi_update_default_sh_exec:s0

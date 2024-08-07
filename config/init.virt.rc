@@ -15,20 +15,9 @@ service vendor.dlkm_loader /vendor/bin/dlkm_loader
 on early-init
     setprop ro.sf.lcd_density ${ro.boot.lcd_density:-160}
 
-on fs
-    mkdir /mnt/vendor/EFI 0770 root root
-    mkdir /mnt/vendor/shared 0770 system system
-
-    # Mount everything that does not require fsck
-    mount_all --early
-
 on post-fs
     write /sys/module/firmware_class/parameters/path /vendor/firmware_mnt/
     start vendor.dlkm_loader
-
-on late-fs
-    # Mount RW partitions which need run fsck
-    mount_all --late
 
 on early-boot
     # Wi-Fi
@@ -39,17 +28,6 @@ on early-boot
 # Graphics
 on early-init
     setprop ro.vendor.graphics ${ro.boot.graphics:-mesa}
-
-on property:ro.vendor.graphics=mesa && property:ro.vendor.graphics.mesa.is_upstream=true
-    setprop ro.hardware.egl mesa
-    setprop ro.hardware.gralloc minigbm
-    setprop ro.hardware.vulkan virtio
-    setprop ro.opengles.version 196610
-
-on property:ro.vendor.graphics=mesa && property:ro.vendor.graphics.mesa.is_upstream=false
-    setprop ro.cpuvulkan.version 0
-    setprop ro.hardware.egl mesa
-    setprop ro.opengles.version 196608
 
 on property:ro.vendor.graphics=swiftshader
     setprop ro.cpuvulkan.version 4202496

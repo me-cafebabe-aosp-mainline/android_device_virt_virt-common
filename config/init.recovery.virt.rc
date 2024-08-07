@@ -5,9 +5,6 @@ service dhcpclient /system/bin/dhcpclient -i ${vendor.recovery.ethernet.dhcp.ifa
     oneshot
     disabled
 
-on early-init
-    mkdir /mnt/vendor/shared 0770 root root
-
 on fs
     mkdir /mnt/vendor/EFI 0770 root root
     mount vfat /dev/block/by-name/EFI /mnt/vendor/EFI rw shortname=lower uid=0 gid=0 dmask=007 fmask=117 context=u:object_r:efi_file:s0
@@ -17,6 +14,3 @@ on fs
 on early-boot
     ifup ${vendor.recovery.ethernet.dhcp.iface:-eth0}
     start dhcpclient
-
-on property:ro.boot.install=1
-    exec u:r:create_partition_table:s0 -- /system/bin/sh -e /system/bin/create_partition_table.sh /system/bin/sgdisk /dev/block/vda vda

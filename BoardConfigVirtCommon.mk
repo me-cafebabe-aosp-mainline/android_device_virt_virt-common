@@ -23,16 +23,6 @@ TARGET_USERIMAGES_SPARSE_EXT_DISABLED := true
 TARGET_USERIMAGES_USE_F2FS := true
 TARGET_USERIMAGES_USE_EXT4 := true
 
-# Graphics (Mesa)
-ifneq ($(wildcard external/mesa/android/Android.mk),)
-BUILD_BROKEN_INCORRECT_PARTITION_IMAGES := true
-BOARD_MESA3D_USES_MESON_BUILD := true
-BOARD_MESA3D_GALLIUM_DRIVERS := virgl
-BOARD_MESA3D_VULKAN_DRIVERS := virtio
-else
-BOARD_GPU_DRIVERS := virgl
-endif
-
 # Graphics (Swiftshader)
 include device/google/cuttlefish/shared/swiftshader/BoardConfig.mk
 
@@ -48,9 +38,7 @@ BOARD_KERNEL_CMDLINE := \
     printk.devkmsg=on \
     rw \
     androidboot.boot_devices=any \
-    androidboot.console=hvc0 \
     androidboot.first_stage_console=0 \
-    androidboot.hardware=virt \
     androidboot.verifiedbootstate=orange
 
 ifneq ($(wildcard $(TARGET_KERNEL_SOURCE)/Makefile),)
@@ -58,25 +46,9 @@ BOARD_VENDOR_KERNEL_MODULES_LOAD := \
     $(strip $(shell cat $(wildcard $(VIRT_COMMON_PATH)/config/modules.load.vendor.*)))
 TARGET_KERNEL_CONFIG := \
     gki_defconfig \
-    lineageos/virtio.config \
     lineageos/peripheral/bluetooth.config \
     lineageos/peripheral/wifi.config \
     lineageos/feature/fbcon.config
-else ifneq ($(wildcard $(TARGET_PREBUILT_KERNEL_DIR)/kernel),)
-BOARD_VENDOR_KERNEL_MODULES := \
-    $(wildcard $(TARGET_PREBUILT_KERNEL_DIR)/*.ko)
-else
-VIRTUAL_DEVICE_KERNEL_MODULES_PATH := \
-    kernel/prebuilts/common-modules/virtual-device/$(TARGET_PREBUILT_KERNEL_USE)/$(TARGET_PREBUILT_KERNEL_MODULES_ARCH)
-
-BOARD_RECOVERY_KERNEL_MODULES := \
-    $(wildcard $(VIRTUAL_DEVICE_KERNEL_MODULES_PATH)/*failover.ko) \
-    $(wildcard $(VIRTUAL_DEVICE_KERNEL_MODULES_PATH)/nd_virtio.ko) \
-    $(wildcard $(VIRTUAL_DEVICE_KERNEL_MODULES_PATH)/virtio*.ko)
-
-BOARD_GENERIC_RAMDISK_KERNEL_MODULES := \
-    $(wildcard $(KERNEL_ARTIFACTS_PATH)/*.ko) \
-    $(wildcard $(VIRTUAL_DEVICE_KERNEL_MODULES_PATH)/*.ko)
 endif
 
 # Partitions
@@ -144,8 +116,6 @@ endif
 BOARD_RAMDISK_USE_LZ4 := true
 
 # Recovery
-TARGET_RECOVERY_FSTAB := $(VIRT_COMMON_PATH)/config/fstab.virt
-TARGET_RECOVERY_PIXEL_FORMAT := ARGB_8888
 TARGET_RECOVERY_UI_LIB := librecovery_ui_virt
 
 # Releasetools
@@ -166,7 +136,6 @@ BOARD_VENDOR_SEPOLICY_DIRS := \
     external/minigbm/cros_gralloc/sepolicy
 
 SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(VIRT_COMMON_PATH)/sepolicy/private
-SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS += $(VIRT_COMMON_PATH)/sepolicy/public
 
 # VINTF
 DEVICE_MANIFEST_FILE := \

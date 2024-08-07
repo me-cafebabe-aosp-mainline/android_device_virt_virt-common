@@ -68,31 +68,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.gatekeeper@1.0-service.software
 
-# Graphics (Mesa)
-ifneq ($(wildcard external/mesa/android/Android.mk),)
-PRODUCT_PACKAGES += \
-    libEGL_mesa \
-    libGLESv1_CM_mesa \
-    libGLESv2_mesa \
-    libgallium_dri \
-    libglapi
-
-$(foreach vk_drv, virtio, \
-    $(eval PRODUCT_PACKAGES += vulkan.$(vk_drv)))
-
-PRODUCT_VENDOR_PROPERTIES += \
-    ro.vendor.graphics.mesa.is_upstream=true
-else
-PRODUCT_PACKAGES += \
-    libGLES_mesa
-
-PRODUCT_VENDOR_PROPERTIES += \
-    ro.vendor.graphics.mesa.is_upstream=false
-
-PRODUCT_SOONG_NAMESPACES += \
-    external/mesa3d
-endif
-
 # Graphics (Swiftshader)
 PRODUCT_PACKAGES += \
     com.google.cf.vulkan
@@ -132,15 +107,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/config/init.virt.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.virt.rc \
     $(LOCAL_PATH)/config/ueventd.rc:$(TARGET_COPY_OUT_VENDOR)/etc/ueventd.rc
 
-PRODUCT_PACKAGES += \
-    fstab.virt \
-    fstab.virt.gsi.sda \
-    fstab.virt.gsi.vdc
-
 # Input
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/config/.emptyfile:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/QEMU_QEMU_USB_Tablet.kl \
-    $(LOCAL_PATH)/config/.emptyfile:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/QEMU_Virtio_Tablet.kl \
     $(LOCAL_PATH)/config/Generic.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/Generic.kl \
     $(LOCAL_PATH)/tablet2multitouch/uinput_multitouch_device.idc:$(TARGET_COPY_OUT_VENDOR)/usr/idc/uinput_multitouch_device.idc
 
@@ -151,20 +119,6 @@ PRODUCT_BUILD_RECOVERY_IMAGE := true
 PRODUCT_USE_DYNAMIC_PARTITION_SIZE := true
 
 # Kernel
-TARGET_PREBUILT_KERNEL_USE ?= 6.1
-TARGET_PREBUILT_KERNEL_DIR := device/virt/kernel-virtio/$(TARGET_PREBUILT_KERNEL_USE)/$(TARGET_PREBUILT_KERNEL_ARCH)
-TARGET_KERNEL_SOURCE := kernel/virt/virtio
-ifneq ($(wildcard $(TARGET_KERNEL_SOURCE)/Makefile),)
-    $(warning Using source built kernel)
-else ifneq ($(wildcard $(TARGET_PREBUILT_KERNEL_DIR)/kernel),)
-    PRODUCT_COPY_FILES += $(TARGET_PREBUILT_KERNEL_DIR)/kernel:kernel
-    $(warning Using prebuilt kernel from $(TARGET_PREBUILT_KERNEL_DIR)/kernel)
-else
-    KERNEL_ARTIFACTS_PATH := kernel/prebuilts/$(TARGET_PREBUILT_EMULATOR_KERNEL_USE)/$(TARGET_PREBUILT_KERNEL_ARCH)
-    EMULATOR_KERNEL_FILE := $(KERNEL_ARTIFACTS_PATH)/kernel-$(TARGET_PREBUILT_EMULATOR_KERNEL_USE)
-    PRODUCT_COPY_FILES += $(EMULATOR_KERNEL_FILE):kernel
-    $(warning Using prebuilt kernel from $(EMULATOR_KERNEL_FILE))
-endif
 PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := false
 
 # Keymint
@@ -250,12 +204,6 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_PACKAGES += \
     sgdisk.recovery
-
-# Vendor ramdisk
-PRODUCT_PACKAGES += \
-    fstab.virt.vendor_ramdisk \
-    fstab.virt.gsi.sda.vendor_ramdisk \
-    fstab.virt.gsi.vdc.vendor_ramdisk
 
 # VirtWifi
 PRODUCT_PACKAGES += \

@@ -21,5 +21,4 @@ allow init firmware_file:filesystem { mount unmount relabelfrom };
 allow init kernel:system module_request;
 
 # Mount
-## permit mount of virtiofs on /mnt/vendor/shared
 allow init mnt_vendor_file:dir mounton;
