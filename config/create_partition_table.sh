@@ -10,7 +10,7 @@ if [ ! -x "$SGDISK_EXEC" ] || [ ! -w "$TARGET" ] || [ -z "$DISK_NAME" ]; then
 fi
 
 case "$DISK_NAME" in
-    "vda")
+    "sda"|"vda")
         $SGDISK_EXEC --zap-all $TARGET
         $SGDISK_EXEC --new=1:0:+128M --typecode=1:ef00 --change-name=1:EFI $TARGET
         if [ "$SUPER_SIZE" = "3221225472" ]; then
