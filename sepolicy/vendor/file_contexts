@@ -9,6 +9,3 @@
 
 # Firmware
 /vendor/firmware_mnt(/.*)?		u:object_r:firmware_file:s0
-
-# Same Process HAL
-/vendor/lib(64)?/hw/gralloc\.minigbm\.so		u:object_r:same_process_hal_file:s0
