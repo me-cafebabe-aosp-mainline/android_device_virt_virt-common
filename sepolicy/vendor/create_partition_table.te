@@ -6,7 +6,9 @@ recovery_only(`
     allow create_partition_table rootfs:dir read;
     allow create_partition_table rootfs:file execute_no_trans;
     allow create_partition_table self:capability sys_admin;
+    allow create_partition_table sd_device:blk_file rw_file_perms;
     allow create_partition_table vd_device:blk_file rw_file_perms;
 
+    allowxperm create_partition_table sd_device:blk_file ioctl { BLKGETSIZE BLKPBSZGET BLKRRPART HDIO_GETGEO };
     allowxperm create_partition_table vd_device:blk_file ioctl { BLKGETSIZE BLKPBSZGET BLKRRPART HDIO_GETGEO };
 ')
