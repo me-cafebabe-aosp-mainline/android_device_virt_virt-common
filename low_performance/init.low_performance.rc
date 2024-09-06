@@ -3,7 +3,7 @@ on property:ro.boot.nobootanim=1
 
 on property:ro.boot.low_perf=1
     setprop ro.config.low_ram true
-    setprop ro.hw_timeout_multiplier 10
+    setprop ro.hw_timeout_multiplier 50
     setprop ro.setupwizard.mode DISABLED
 
     # From build/make/target/board/go_defaults_common.prop
