@@ -1,10 +1,10 @@
 import /vendor/etc/init/hw/init.low_performance.rc
 
-service suspend_blocker /vendor/bin/suspend_blocker
-    class early_hal # Start together with system_suspend HAL
-    group system
-    user root
+# Display
+on early-init
+    setprop ro.sf.lcd_density ${ro.boot.lcd_density:-160}
 
+# DLKM Loader
 service vendor.dlkm_loader /vendor/bin/dlkm_loader
     class main
     user root
@@ -12,18 +12,9 @@ service vendor.dlkm_loader /vendor/bin/dlkm_loader
     disabled
     oneshot
 
-on early-init
-    setprop ro.sf.lcd_density ${ro.boot.lcd_density:-160}
-
 on post-fs
     write /sys/module/firmware_class/parameters/path /vendor/firmware_mnt/
     start vendor.dlkm_loader
-
-on early-boot
-    # Wi-Fi
-    mkdir /data/vendor/wifi 0770 wifi wifi
-    mkdir /data/vendor/wifi/wpa 0770 wifi wifi
-    mkdir /data/vendor/wifi/wpa/sockets 0770 wifi wifi
 
 # Graphics
 on early-init
@@ -46,6 +37,12 @@ service vendor.refind-update-default_selection /vendor/bin/refind-update-default
 on property:sys.shutdown.requested=*
     start vendor.refind-update-default_selection
 
+# Suspend blocker
+service suspend_blocker /vendor/bin/suspend_blocker
+    class early_hal # Start together with system_suspend HAL
+    group system
+    user root
+
 # VirtWifi
 service setup_wifi /vendor/bin/setup_wifi --interface=${ro.vendor.virtwifi.port}
     override
@@ -56,3 +53,9 @@ service setup_wifi /vendor/bin/setup_wifi --interface=${ro.vendor.virtwifi.port}
 
 on post-fs-data && property:ro.boot.wifi_impl=virt_wifi
     start setup_wifi
+
+# Wi-Fi
+on early-boot
+    mkdir /data/vendor/wifi 0770 wifi wifi
+    mkdir /data/vendor/wifi/wpa 0770 wifi wifi
+    mkdir /data/vendor/wifi/wpa/sockets 0770 wifi wifi
