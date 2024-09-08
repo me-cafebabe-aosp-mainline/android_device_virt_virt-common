@@ -7,9 +7,9 @@
 LOCAL_PATH := $(call my-dir)
 
 # Common definitions for boot managers
-BOOTMGR_TOOLS_LINEAGE_BIN_DIR := prebuilts/tools-lineage/$(HOST_PREBUILT_TAG)/bin
-BOOTMGR_PATH_OVERRIDE := PATH=$(BOOTMGR_TOOLS_LINEAGE_BIN_DIR):$$PATH
-BOOTMGR_XORRISO_EXEC := $(BOOTMGR_TOOLS_LINEAGE_BIN_DIR)/xorriso
+BOOTMGR_TOOLS_BIN_DIR := prebuilts/bootmgr/tools/$(HOST_PREBUILT_TAG)/bin
+BOOTMGR_PATH_OVERRIDE := PATH=$(BOOTMGR_TOOLS_BIN_DIR):$$PATH
+BOOTMGR_XORRISO_EXEC := $(BOOTMGR_TOOLS_BIN_DIR)/xorriso
 
 ifeq ($(TARGET_ARCH),arm64)
 BOOTMGR_EFI_BOOT_FILENAME := BOOTAA64.EFI
@@ -64,8 +64,8 @@ INSTALLED_ESPIMAGE_INSTALL_TARGET_DEPS := \
 # $(3): purpose
 define create-espimage
 	/bin/dd if=/dev/zero of=$(1) bs=1M count=$$($(VIRT_COMMON_PATH)/.calc_fat32_img_size.sh $(2))
-	$(BOOTMGR_TOOLS_LINEAGE_BIN_DIR)/mformat -F -i $(1) -v "$(3)" ::
-	$(foreach content,$(2),$(BOOTMGR_TOOLS_LINEAGE_BIN_DIR)/mcopy -i $(1) -s $(content) :: &&)true
+	$(BOOTMGR_TOOLS_BIN_DIR)/mformat -F -i $(1) -v "$(3)" ::
+	$(foreach content,$(2),$(BOOTMGR_TOOLS_BIN_DIR)/mcopy -i $(1) -s $(content) :: &&)true
 endef
 
 # $(1): path to boot manager config file
