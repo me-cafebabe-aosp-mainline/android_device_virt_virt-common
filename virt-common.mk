@@ -79,15 +79,9 @@ TARGET_VULKAN_SUPPORT := true
 $(call inherit-product, device/google/cuttlefish/shared/swiftshader/device_vendor.mk)
 
 # Health
-ifneq ($(LINEAGE_BUILD),)
-PRODUCT_PACKAGES += \
-    android.hardware.health-service.batteryless \
-    android.hardware.health-service.batteryless_recovery
-else
 PRODUCT_PACKAGES += \
     android.hardware.health-service.cuttlefish_recovery \
     com.google.cf.health
-endif
 
 # Init
 PRODUCT_COPY_FILES += \
