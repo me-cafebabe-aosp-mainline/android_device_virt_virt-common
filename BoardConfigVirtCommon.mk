@@ -23,9 +23,6 @@ TARGET_USERIMAGES_SPARSE_EXT_DISABLED := true
 TARGET_USERIMAGES_USE_F2FS := true
 TARGET_USERIMAGES_USE_EXT4 := true
 
-# Graphics (Swiftshader)
-include device/google/cuttlefish/shared/swiftshader/BoardConfig.mk
-
 # Init
 TARGET_INIT_VENDOR_LIB ?= //$(VIRT_COMMON_PATH):init_virt
 TARGET_RECOVERY_DEVICE_MODULES ?= init_virt
