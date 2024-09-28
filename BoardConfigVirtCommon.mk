@@ -36,20 +36,17 @@ BOARD_KERNEL_CMDLINE := \
     loop.max_part=7 \
     printk.devkmsg=on \
     rw \
+    vt.global_cursor_default=0 \
     androidboot.boot_devices=any \
     androidboot.first_stage_console=0 \
+    androidboot.selinux=permissive \
     androidboot.verifiedbootstate=orange
 
 ifneq ($(wildcard $(TARGET_KERNEL_SOURCE)/Makefile),)
 BOARD_VENDOR_KERNEL_MODULES_LOAD := \
-    btusb.ko \
     cfg80211.ko \
     virt_wifi.ko
-TARGET_KERNEL_CONFIG := \
-    gki_defconfig \
-    lineageos/peripheral/bluetooth.config \
-    lineageos/peripheral/wifi.config \
-    lineageos/feature/fbcon.config
+#    btusb.ko
 endif
 
 # Partitions
