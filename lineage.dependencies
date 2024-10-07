@@ -5,7 +5,6 @@
   },
   {
     "repository": "android_prebuilts_bootmgr",
-    "target_path": "prebuilts/bootmgr",
-    "branch": "lineage-21.0"
+    "target_path": "prebuilts/bootmgr"
   }
 ]
