@@ -63,7 +63,7 @@ INSTALLED_ESPIMAGE_INSTALL_TARGET_DEPS := \
 # $(2): list of contents to include
 # $(3): purpose
 define create-espimage
-	/bin/dd if=/dev/zero of=$(1) bs=1M count=$$($(VIRT_COMMON_PATH)/.calc_fat32_img_size.sh $(2))
+	/bin/dd if=/dev/zero of=$(1) bs=1M count=$$($(VIRT_COMMON_PATH)/bootmgr/.calc_fat32_img_size.sh $(2))
 	$(BOOTMGR_TOOLS_BIN_DIR)/mformat -F -i $(1) -v "$(3)" ::
 	$(foreach content,$(2),$(BOOTMGR_TOOLS_BIN_DIR)/mcopy -i $(1) -s $(content) :: &&)true
 endef
