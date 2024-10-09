@@ -38,32 +38,3 @@ The device tree is currently WIP, Not suitable for normal use.
 | ----- | ---- |
 | 14-embed-super_empty_img | [LineageOS Gerrit](https://review.lineageos.org/q/topic:%2214-embed-super_empty_img%22) |
 | 14-recovery-ethernet | [LineageOS Gerrit](https://review.lineageos.org/q/topic:%2214-recovery-ethernet%22) |
-
-# Build
-
-The device tree targets Android 14 QPR3.
-
-1. Initialize build environment
-
-```
-source build/envsetup.sh
-```
-
-2. Select the build target (Using `virtio_x86_64` as example)
-
-For AOSP:
-`lunch aosp_virtio_x86_64-ap2a-userdebug`
-
-For LineageOS:
-`breakfast virtio_x86_64`
-
-3. Build
-
-To build vda disk image:
-`make diskimage-vda`
-
-To build EFI System Partition (Boot) image:
-`make espimage-boot`
-
-To build EFI System Partition (Install) image:
-`make espimage-install`
