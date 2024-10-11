@@ -35,6 +35,10 @@ PRODUCT_VENDOR_PROPERTIES += \
 endif
 endif
 
+# Boot manager
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/bootmgr/rEFInd/refind-update-default_selection.sh:$(TARGET_COPY_OUT_VENDOR)/bin/refind-update-default_selection.sh
+
 # Bootanimation
 TARGET_SCREEN_WIDTH := 600
 TARGET_SCREEN_HEIGHT := 600
@@ -53,10 +57,6 @@ PRODUCT_PACKAGES += \
 # DLKM Loader
 PRODUCT_PACKAGES += \
     dlkm_loader
-
-# EFI
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/bootmgr/rEFInd/refind-update-default_selection.sh:$(TARGET_COPY_OUT_VENDOR)/bin/refind-update-default_selection.sh
 
 # Fastbootd
 PRODUCT_PACKAGES += \

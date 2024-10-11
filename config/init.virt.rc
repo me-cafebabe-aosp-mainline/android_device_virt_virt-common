@@ -1,5 +1,15 @@
 import /vendor/etc/init/hw/init.low_performance.rc
 
+# Boot manager
+service vendor.refind-update-default_selection /vendor/bin/refind-update-default_selection.sh ${sys.shutdown.requested}
+    user root
+    group root
+    disabled
+    oneshot
+
+on property:sys.shutdown.requested=*
+    start vendor.refind-update-default_selection
+
 # Display
 on early-init
     setprop ro.sf.lcd_density ${ro.boot.lcd_density:-160}
@@ -27,16 +37,6 @@ on property:ro.vendor.graphics=swiftshader
     setprop ro.hardware.vulkan pastel
     setprop ro.opengles.version 196609
     setprop ro.vulkan.apex com.google.cf.vulkan
-
-# Shutdown
-service vendor.refind-update-default_selection /vendor/bin/refind-update-default_selection.sh ${sys.shutdown.requested}
-    user root
-    group root
-    disabled
-    oneshot
-
-on property:sys.shutdown.requested=*
-    start vendor.refind-update-default_selection
 
 # Suspend blocker
 service suspend_blocker /vendor/bin/suspend_blocker
