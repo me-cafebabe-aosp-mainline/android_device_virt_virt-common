@@ -96,6 +96,8 @@ define process-bootmgr-cfg-common
 	sed -i "s|@BOOTMGR_ANDROID_DISTRIBUTION_NAME@|$(BOOTMGR_ANDROID_DISTRIBUTION_NAME)|g" $(1)
 	sed -i "s|@BOOTMGR_EFI_BOOT_FILENAME@|$(BOOTMGR_EFI_BOOT_FILENAME)|g" $(1)
 	sed -i "s|@STRIPPED_BOARD_KERNEL_CMDLINE@|$(strip $(BOARD_KERNEL_CMDLINE))|g" $(1)
+	sed -i "s|@STRIPPED_BOARD_KERNEL_CMDLINE_BOOT@|$(strip $(BOARD_KERNEL_CMDLINE_BOOT))|g" $(1)
+	sed -i "s|@STRIPPED_BOARD_KERNEL_CMDLINE_RECOVERY@|$(strip $(BOARD_KERNEL_CMDLINE_RECOVERY))|g" $(1)
 endef
 
 include $(call all-makefiles-under,$(LOCAL_PATH))
