@@ -89,10 +89,12 @@ PRODUCT_PACKAGES += \
     android.hardware.fastboot-service.virt_recovery \
     fastbootd
 
-# First stage console
+# First stage init
 PRODUCT_PACKAGES += \
     linker.vendor_ramdisk \
-    shell_and_utilities_vendor_ramdisk
+    resize2fs.vendor_ramdisk \
+    shell_and_utilities_vendor_ramdisk \
+    tune2fs.vendor_ramdisk
 
 # Gatekeeper
 PRODUCT_PACKAGES += \
