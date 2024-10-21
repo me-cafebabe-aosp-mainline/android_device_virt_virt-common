@@ -232,6 +232,13 @@ PRODUCT_PACKAGES += \
     grub_boot_control.recovery \
     sgdisk.recovery
 
+PRODUCT_PACKAGES_DEBUG += \
+    tinycap \
+    tinyhostless \
+    tinymix \
+    tinypcminfo \
+    tinyplay
+
 PRODUCT_HOST_PACKAGES += \
     grub-editenv \
     grub_boot_control
