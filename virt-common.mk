@@ -196,6 +196,9 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/scripts/flash_persist_partition.sh:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/flash_persist_partition.sh \
     device/google/cuttlefish/shared/config/cgroups.json:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/etc/cgroups.json
 
+# Sensors
+$(call inherit-product, device/google/cuttlefish/shared/sensors/device_vendor.mk)
+
 # Scoped Storage
 $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
 
