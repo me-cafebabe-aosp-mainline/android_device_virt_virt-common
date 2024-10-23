@@ -165,22 +165,16 @@ $(FIRMWARE_MOUNT_POINT):
 # Radio files
 ifneq ($(TARGET_BOOT_MANAGER),)
 INSTALLED_RADIOIMAGE_TARGET += $(PRODUCT_OUT)/EFI.img
-$(PRODUCT_OUT)/EFI.img : $(PRODUCT_OUT)/obj/CUSTOM_IMAGES/EFI.img
-	$(transform-prebuilt-to-target)
 endif # TARGET_BOOT_MANAGER
 
 ifeq ($(AB_OTA_UPDATER),true)
 ifeq ($(TARGET_BOOT_MANAGER),grub)
 INSTALLED_RADIOIMAGE_TARGET += $(PRODUCT_OUT)/grub_boot.img
-$(PRODUCT_OUT)/grub_boot.img : $(PRODUCT_OUT)/obj/CUSTOM_IMAGES/grub_boot.img
-	$(transform-prebuilt-to-target)
 endif # TARGET_BOOT_MANAGER
 endif # AB_OTA_UPDATER
 
 ifeq ($(TARGET_BOOT_MANAGER),grub)
 INSTALLED_RADIOIMAGE_TARGET += $(PRODUCT_OUT)/persist.img
-$(PRODUCT_OUT)/persist.img : $(PRODUCT_OUT)/obj/CUSTOM_IMAGES/persist.img
-	$(transform-prebuilt-to-target)
 endif # TARGET_BOOT_MANAGER
 
 # Super image (empty)
