@@ -116,15 +116,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_REQUIRES_INSECURE_EXECMEM_FOR_SWIFTSHADER := true
 
 # Health
-ifneq ($(LINEAGE_BUILD),)
-PRODUCT_PACKAGES += \
-    android.hardware.health-service.batteryless \
-    android.hardware.health-service.batteryless_recovery
-else
 PRODUCT_PACKAGES += \
     android.hardware.health-service.cuttlefish_recovery \
     com.google.cf.health
-endif
 
 # Init
 PRODUCT_COPY_FILES += \
