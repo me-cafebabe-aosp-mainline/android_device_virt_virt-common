@@ -47,7 +47,6 @@ on early-init
 
 on property:ro.vendor.graphics=mesa
     setprop ro.hardware.egl mesa
-    setprop ro.opengles.version 196610
 
 on property:ro.vendor.graphics=mesa_swrast
     setprop ro.hardware.egl mesa
