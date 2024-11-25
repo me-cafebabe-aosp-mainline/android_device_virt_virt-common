@@ -154,6 +154,7 @@ VENDOR_SECURITY_PATCH = $(PLATFORM_SECURITY_PATCH)
 # SELinux
 BOARD_VENDOR_SEPOLICY_DIRS := \
     $(VIRT_COMMON_PATH)/sepolicy/vendor \
+    $(VIRT_COMMON_PATH)/sepolicy/vendor/minigbm \
     device/google/cuttlefish/shared/graphics/sepolicy \
     device/google/cuttlefish/shared/sensors/sepolicy \
     device/google/cuttlefish/shared/swiftshader/sepolicy \
