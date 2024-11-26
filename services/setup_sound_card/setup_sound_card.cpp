@@ -9,6 +9,7 @@
 
 #include <cerrno>
 #include <climits>
+#include <cstdlib>
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -63,7 +64,7 @@ const vector<MixerControl> kMixerControlVec_ENS1371 = {
         {"PCM Playback Volume", MIXER_CTL_TYPE_INT, {INT_MAX, INT_MAX}}};
 
 SoundCardSettingsMapType kSoundCardSettingsMap = {
-        {"ENS1370 - Ensoniq AudioPCI", {0, &kMixerControlVec_ENS1370, true, -1}}, // broken
+        {"ENS1370 - Ensoniq AudioPCI", {0, &kMixerControlVec_ENS1370, true, -1}},  // broken
         {"ENS1371 - Ensoniq AudioPCI", {0, &kMixerControlVec_ENS1371, true, 200}},
         {"ICH - Intel 82801AA-ICH", {0, nullptr, false, 0}},
 };
@@ -216,5 +217,5 @@ int main() {
         success &= calculateAndSetLatencyMs(it_card->second.alsaDevice);
     }
 
-    return success ? 0 : EXIT_FAILURE;
+    return success ? EXIT_SUCCESS : EXIT_FAILURE;
 }

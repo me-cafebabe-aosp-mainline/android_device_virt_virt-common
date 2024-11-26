@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <cstring>
 #include <iostream>
 #include <map>
@@ -27,10 +28,10 @@ int cmd_create(int, char** argv) {
 
     if (!WriteFileFromMap(path, empty_grub_env_map)) {
         cout << "failed to create " << path << endl;
-        return 1;
+        return EXIT_FAILURE;
     }
 
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 int cmd_list(int, char** argv) {
@@ -39,14 +40,14 @@ int cmd_list(int, char** argv) {
 
     if (!LoadFileToMap(path, &loaded_map)) {
         cout << "failed to load " << path << endl;
-        return 1;
+        return EXIT_FAILURE;
     }
 
     for (const auto& [key, value] : loaded_map) {
         cout << key << "=" << value << endl;
     }
 
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 int cmd_set(int argc, char** argv) {
@@ -56,12 +57,12 @@ int cmd_set(int argc, char** argv) {
 
     if (vars_count <= 0) {
         cout << "no vars to set" << endl;
-        return 1;
+        return EXIT_FAILURE;
     }
 
     if (!LoadFileToMap(path, &loaded_map)) {
         cout << "failed to load " << path << endl;
-        return 1;
+        return EXIT_FAILURE;
     }
 
     for (int i = 1; i <= vars_count; i++) {
@@ -81,10 +82,10 @@ int cmd_set(int argc, char** argv) {
 
     if (!WriteFileFromMap(path, loaded_map)) {
         cout << "failed to write to " << path << endl;
-        return 1;
+        return EXIT_FAILURE;
     }
 
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 int cmd_unset(int argc, char** argv) {
@@ -94,12 +95,12 @@ int cmd_unset(int argc, char** argv) {
 
     if (vars_count <= 0) {
         cout << "no vars to unset" << endl;
-        return 1;
+        return EXIT_FAILURE;
     }
 
     if (!LoadFileToMap(path, &loaded_map)) {
         cout << "failed to load " << path << endl;
-        return 1;
+        return EXIT_FAILURE;
     }
 
     for (int i = 1; i <= vars_count; i++) {
@@ -129,10 +130,10 @@ int cmd_unset(int argc, char** argv) {
 
     if (!WriteFileFromMap(path, loaded_map)) {
         cout << "failed to write to " << path << endl;
-        return 1;
+        return EXIT_FAILURE;
     }
 
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 const map<string, int (*)(int, char**)> kCommandMap = {
@@ -145,15 +146,12 @@ const map<string, int (*)(int, char**)> kCommandMap = {
 int main(int argc, char** argv) {
     if (argc < 3) {
         cout << kHelpText;
-        return 1;
+        return EXIT_FAILURE;
     }
 
-    for (const auto& [cmd_name, cmd_func] : kCommandMap) {
-        if (!strcmp(argv[2], cmd_name.c_str())) {
-            return cmd_func(argc, argv);
-        }
-    }
+    auto it = kCommandMap.find(string(argv[2]));
+    if (it != kCommandMap.end()) return it->second(argc, argv);
 
     cout << "invalid command" << endl;
-    return 1;
+    return EXIT_FAILURE;
 }
