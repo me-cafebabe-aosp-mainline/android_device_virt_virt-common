@@ -1,0 +1,7 @@
+cc_library {
+    name: "libtablet2multitouch",
+    srcs: ["libtablet2multitouch.c"],
+    export_include_dirs: ["include"],
+    shared_libs: ["libcutils"],
+    vendor: true,
+}
