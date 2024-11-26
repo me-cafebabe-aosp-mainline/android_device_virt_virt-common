@@ -1,18 +1,19 @@
+#include <cstdlib>
 #include <iostream>
 #include <map>
 #include <string>
 
 #include <GrubBootControl.h>
 
-#define CHECK_AND_PROVIDE_SLOT_NUMBER                             \
-    if (argc != 4) {                                              \
-        cout << "Please specify slot" << endl;                    \
-        return 1;                                                 \
-    }                                                             \
-    int slot = stoi(string(argv[3]));                             \
-    if (slot < 0) {                                               \
+#define CHECK_AND_PROVIDE_SLOT_NUMBER                              \
+    if (argc != 4) {                                               \
+        cout << "Please specify slot" << endl;                     \
+        return EXIT_FAILURE;                                       \
+    }                                                              \
+    int slot = stoi(string(argv[3]));                              \
+    if (slot < 0) {                                                \
         cout << "Invalid slot number " << to_string(slot) << endl; \
-        return 1;                                                 \
+        return EXIT_FAILURE;                                       \
     }
 
 using namespace libgrub_boot_control;
@@ -48,7 +49,7 @@ int PrintIntRetValue(int ret, bool zero_is_ok = false) {
             break;
     }
     cout << endl;
-    return (ret < 0) ? 1 : 0;
+    return (ret < 0) ? EXIT_FAILURE : EXIT_SUCCESS;
 }
 
 int cmd_getActiveBootSlot(int, char**) {
@@ -65,13 +66,13 @@ int cmd_getNumberSlots(int, char**) {
 
 int cmd_getSnapshotMergeStatus(int, char**) {
     cout << g->getSnapshotMergeStatus() << endl;
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 int cmd_getSuffix(int argc, char** argv) {
     CHECK_AND_PROVIDE_SLOT_NUMBER
     cout << g->getSuffix(slot) << endl;
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 int cmd_isSlotBootable(int argc, char** argv) {
@@ -101,7 +102,7 @@ int cmd_setSlotAsUnbootable(int argc, char** argv) {
 int cmd_setSnapshotMergeStatus(int argc, char** argv) {
     if (argc != 4) {
         cout << "Please specify merge status string" << endl;
-        return 1;
+        return EXIT_FAILURE;
     }
     return PrintIntRetValue(g->setSnapshotMergeStatus(string(argv[3])), true);
 }
@@ -126,7 +127,7 @@ int main(int argc, char** argv) {
 
     if (argc < 2) {
         cout << kHelpText;
-        return 1;
+        return EXIT_FAILURE;
     }
 
     g = new GrubBootControl(string(argv[1]));
@@ -136,22 +137,24 @@ int main(int argc, char** argv) {
         goto out;
     }
 
-    show_commands = string(argv[2]) == "help";
-    if (show_commands) cout << "Available commands:" << endl;
-    for (const auto& [cmd_name, cmd_func] : kCommandMap) {
-        if (show_commands) {
+    if (string(argv[2]) == "help") {
+        cout << "Available commands:" << endl;
+        for (const auto& [cmd_name, cmd_func] : kCommandMap) {
             cout << "  " << cmd_name << endl;
-            continue;
         }
-        if (!strcmp(argv[2], cmd_name.c_str())) {
-            ret = cmd_func(argc, argv);
+        goto out;
+    }
+
+    {
+        auto it = kCommandMap.find(string(argv[2]));
+        if (it != kCommandMap.end()) {
+            ret = it->second(argc, argv);
             goto out;
         }
     }
-    if (!show_commands) {
-        cout << "subcommand not found" << endl;
-        ret = 1;
-    }
+
+    cout << "subcommand not found" << endl;
+    ret = EXIT_FAILURE;
 
 out:
     delete g;

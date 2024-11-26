@@ -20,12 +20,11 @@
 
 class VirtRecoveryUI : public EthernetRecoveryUI {
   public:
-    bool IsUsbConnected() override {
-      return true;
-    }
+    bool IsUsbConnected() override { return true; }
 };
 
 Device* make_device() {
-    std::string eth_device = android::base::GetProperty("vendor.recovery.ethernet.dhcp.iface", "eth0");
+    std::string eth_device =
+            android::base::GetProperty("vendor.recovery.ethernet.dhcp.iface", "eth0");
     return new EthernetDevice(new VirtRecoveryUI, eth_device);
 }

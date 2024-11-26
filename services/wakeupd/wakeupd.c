@@ -1,21 +1,21 @@
 #define LOG_TAG "wakeupd"
 #include <log/log.h>
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+#include <errno.h>
 #include <fcntl.h>
 #include <linux/input.h>
 #include <linux/uinput.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-#include <errno.h>
 #include <sys/stat.h>
+#include <unistd.h>
 
 #define DPMS_STATUS_PATH "/sys/class/drm/card0-Virtual-1/dpms"
 #define DPMS_OFF "Off"
 #define WAKEUP_KEY_CODE KEY_WAKEUP
 
-void setup_uinput_device(int *uinput_fd) {
+void setup_uinput_device(int* uinput_fd) {
     struct uinput_setup usetup;
 
     *uinput_fd = open("/dev/uinput", O_WRONLY | O_NONBLOCK);
@@ -89,20 +89,20 @@ int main() {
     }
 
     while (1) {
-        lseek(dpms_fd, 0, SEEK_SET); // Reset file pointer to the beginning
+        lseek(dpms_fd, 0, SEEK_SET);  // Reset file pointer to the beginning
         nread = read(dpms_fd, dpms_status, sizeof(dpms_status) - 1);
         if (nread < 0) {
             ALOGE("Failed to read DPMS status");
             sleep(5);
             continue;
         }
-        dpms_status[nread] = '\0'; // Null-terminate the string
+        dpms_status[nread] = '\0';  // Null-terminate the string
 
         if (strncmp(dpms_status, DPMS_OFF, strlen(DPMS_OFF)) == 0) {
             send_wakeup_event(uinput_fd);
         }
 
-        sleep(5); // Check every 5 seconds
+        sleep(5);  // Check every 5 seconds
     }
 
     // Clean up uinput device
@@ -112,5 +112,5 @@ int main() {
     close(uinput_fd);
     close(dpms_fd);
 
-    return 0;
+    return EXIT_SUCCESS;
 }

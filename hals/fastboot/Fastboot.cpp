@@ -50,14 +50,12 @@ ScopedAStatus Fastboot::getPartitionType(const std::string& in_partitionName,
         return ScopedAStatus::fromExceptionCodeWithMessage(EX_ILLEGAL_ARGUMENT,
                                                            "Invalid partition name");
     }
-    for (const auto& [part_name, part_fstype] : kPartitionTypeMap) {
-        if (part_name == in_partitionName) {
-            *_aidl_return = part_fstype;
-            goto out;
-        }
+    auto it = kPartitionTypeMap.find(in_partitionName);
+    if (it != kPartitionTypeMap.end()) {
+        *_aidl_return = it->second;
+    } else {
+        *_aidl_return = FileSystemType::RAW;
     }
-    *_aidl_return = FileSystemType::RAW;
-out:
     return ScopedAStatus::ok();
 }
 

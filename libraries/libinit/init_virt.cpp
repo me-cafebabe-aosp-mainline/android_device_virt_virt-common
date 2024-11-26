@@ -23,14 +23,14 @@ using android::base::ReadFileToString;
 static const std::string kDmiIdPath = "/sys/devices/virtual/dmi/id/";
 
 static const std::unordered_map<std::string, std::string> kDmiIdToPropertyMap = {
-    {"bios_version", "ro.boot.bootloader"},
-    {"product_serial", "ro.serialno"},
+        {"bios_version", "ro.boot.bootloader"},
+        {"product_serial", "ro.serialno"},
 };
 
 static const std::unordered_map<std::string, std::string> kDmiIdToRoBuildPropMap = {
-    {"chassis_vendor", "brand"},
-    {"product_name", "model"},
-    {"sys_vendor", "manufacturer"},
+        {"chassis_vendor", "brand"},
+        {"product_name", "model"},
+        {"sys_vendor", "manufacturer"},
 };
 
 static void set_misc_properties() {
@@ -56,16 +56,14 @@ static void set_properties_from_dmi_id() {
 
     for (const auto& [file, prop] : kDmiIdToPropertyMap) {
         ReadFileToString(kDmiIdPath + file, &value);
-        if (value.empty())
-            continue;
+        if (value.empty()) continue;
         value.pop_back();
         property_override(prop, value);
     }
 
     for (const auto& [file, ro_build_prop] : kDmiIdToRoBuildPropMap) {
         ReadFileToString(kDmiIdPath + file, &value);
-        if (value.empty())
-            continue;
+        if (value.empty()) continue;
         value.pop_back();
         set_ro_build_prop(ro_build_prop, value, true);
     }
