@@ -5,6 +5,7 @@ cc_binary {
     ],
     shared_libs: [
         "libcutils",
+        "libtablet2multitouch",
     ],
     init_rc: ["tablet2multitouch.rc"],
     vendor: true
