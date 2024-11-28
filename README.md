@@ -1,7 +1,5 @@
 # Android common device tree for Virtual Machines
 
-The device tree is currently WIP, Not suitable for normal use.
-
 ```
 #
 # Copyright (C) 2024 The LineageOS Project
@@ -9,10 +7,6 @@ The device tree is currently WIP, Not suitable for normal use.
 # SPDX-License-Identifier: Apache-2.0
 #
 ```
-
-# TODO
-- Support for USB Camera, and WiFi
-- 16K pagesize
 
 # List of optional extra boot parameters
 
