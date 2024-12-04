@@ -8,5 +8,5 @@ cc_binary {
         "libtablet2multitouch",
     ],
     init_rc: ["tablet2multitouch.rc"],
-    vendor: true
+    vendor: true,
 }

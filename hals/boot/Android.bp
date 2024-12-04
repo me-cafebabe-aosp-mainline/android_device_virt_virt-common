@@ -19,8 +19,8 @@ cc_defaults {
     relative_install_path: "hw",
     defaults: ["libboot_control_defaults"],
     srcs: [
-        "main.cpp",
         "BootControl.cpp",
+        "main.cpp",
     ],
 }
 
@@ -52,11 +52,11 @@ cc_binary {
     recovery: true,
 
     shared_libs: [
+        "android.hardware.boot-V1-ndk",
         "libbase",
         "libbinder_ndk",
         "libgrub_boot_control",
         "libgrub_editenv",
-        "android.hardware.boot-V1-ndk",
     ],
 }
 

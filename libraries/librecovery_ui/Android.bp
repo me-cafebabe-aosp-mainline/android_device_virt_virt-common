@@ -22,8 +22,8 @@ cc_library {
     name: "librecovery_ui_virt",
     cflags: [
         "-Wall",
-        "-Wextra",
         "-Werror",
+        "-Wextra",
         "-pedantic",
     ],
     srcs: [
