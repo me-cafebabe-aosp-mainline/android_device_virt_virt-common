@@ -7,5 +7,5 @@ cc_binary {
         "liblog",
     ],
     init_rc: ["wakeupd.rc"],
-    vendor: true
+    vendor: true,
 }

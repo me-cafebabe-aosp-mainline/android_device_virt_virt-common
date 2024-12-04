@@ -31,8 +31,8 @@ cc_library_static {
     export_include_dirs: ["include"],
     cflags: [
         "-Wall",
-        "-Wextra",
         "-Werror",
+        "-Wextra",
     ],
     recovery_available: true,
     vendor_available: true,

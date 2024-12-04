@@ -24,11 +24,11 @@ cc_binary {
     ],
     relative_install_path: "hw",
     shared_libs: [
+        "android.hardware.fastboot-V1-ndk",
         "libbase",
         "libbinder_ndk",
+        "libcutils",
         "liblog",
         "libutils",
-        "libcutils",
-        "android.hardware.fastboot-V1-ndk",
     ],
 }
