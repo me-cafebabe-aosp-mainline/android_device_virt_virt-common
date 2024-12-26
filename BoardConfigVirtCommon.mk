@@ -39,12 +39,14 @@ TARGET_RECOVERY_DEVICE_MODULES ?= init_virt
 
 # Kernel
 BOARD_KERNEL_CMDLINE := \
+    audit=0 \
     log_buf_len=4M \
     loop.max_part=7 \
     printk.devkmsg=on \
     rw \
     androidboot.boot_devices=any \
     androidboot.first_stage_console=0 \
+    androidboot.selinux=permissive \
     androidboot.verifiedbootstate=orange
 
 ifneq ($(wildcard $(TARGET_KERNEL_SOURCE)/Makefile),)
@@ -56,7 +58,8 @@ TARGET_KERNEL_CONFIG := \
     gki_defconfig \
     lineageos/peripheral/bluetooth.config \
     lineageos/peripheral/wifi.config \
-    lineageos/feature/fbcon.config
+    lineageos/feature/fbcon.config \
+    lineageos/feature/lindroid.config
 endif
 
 # Partitions

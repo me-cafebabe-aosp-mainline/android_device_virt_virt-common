@@ -260,3 +260,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     CuttlefishTetheringOverlay \
     CuttlefishWifiOverlay
+
+# Inherit Lindroid
+$(call inherit-product, vendor/lindroid/lindroid.mk)
