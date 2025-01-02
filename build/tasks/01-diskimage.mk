@@ -7,7 +7,7 @@
 ifeq ($(USES_DEVICE_VIRT_VIRT_COMMON),true)
 
 # Create vda disk image
-SGDISK_EXEC := out/host/linux-x86/bin/sgdisk
+SGDISK_EXEC := $(HOST_OUT_EXECUTABLES)/sgdisk
 
 DISK_VDA_SECTOR_SIZE := 512
 ifeq ($(AB_OTA_UPDATER),true)
