@@ -1,0 +1,2 @@
+androidboot.boot_devices = any
+androidboot.first_stage_console = 0
