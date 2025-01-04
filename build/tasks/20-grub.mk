@@ -44,6 +44,7 @@ define install-grub-theme
 	mkdir -p $(1)/boot/grub/themes
 	rm -rf $(1)/boot/grub/themes/$(BOOTMGR_THEME)
 	$(if $(BOOTMGR_THEME), cp -r $(COMMON_GRUB_PATH)/themes/$(BOOTMGR_THEME) $(1)/boot/grub/themes/)
+	$(if $(filter lineage,$(BOOTMGR_THEME)), cp $(COMMON_GRUB_PATH)/fonts/Roboto-Regular-20.pf2 $(1)/boot/grub/fonts/)
 endef
 
 # $(1): output file
