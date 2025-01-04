@@ -1,0 +1,72 @@
+#
+# Copyright (C) 2025 The LineageOS Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+desktop-color: "#202626"
+terminal-font: "Unifont Regular 16"
+terminal-left: "0"
+terminal-top: "0"
+terminal-width: "100%"
+terminal-height: "100%"
+title-text: ""
+
++ image {
+    left = 40%
+    top = 5%
+
+    file = "/boot/grub/themes/lineage/images/lineage_mark.png"
+}
+
++ boot_menu {
+    left = 10%
+    top = 20%
+    width = 80%
+    height = 58%
+
+    item_color = "#CCE8E9"
+    item_font = "Roboto Regular 20"
+
+    menu_pixmap_style = "menu_*.png"
+    item_pixmap_style = "item_*.png"
+    selected_item_pixmap_style = "selected_item_*.png"
+
+    icon_width = 64
+    icon_height = 64
+
+    item_height = 72
+    item_icon_space = 16
+    item_padding = 0
+    item_spacing = 36
+}
+
++ progress_bar {
+    left = 30%
+    top = 84%
+    width = 40%
+
+    id = "__timeout__"
+    fg_color = "#80D4D8"
+    bg_color = "#324B4C"
+    border_color = "#202626" # same as desktop-color
+    bar_style = "highlight_style"
+}
+
++ label {
+    left = 30%
+    top = 90%
+
+    text = "Booting in    seconds"
+    font = "Unifont Regular 16"
+    color = "#CCE8E9" # boot_menu item_color
+}
+
++ label {
+    left = 38%+6
+    top = 90%
+
+    id = "__timeout__"
+    font = "Unifont Regular 16"
+    color = "#CCE8E9" # boot_menu item_color
+}
