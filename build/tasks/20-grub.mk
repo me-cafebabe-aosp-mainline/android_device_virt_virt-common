@@ -73,9 +73,6 @@ define make-espimage
 	$(call process-bootmgr-cfg-common,$(3)/fsroot/boot/grub/grub.cfg)
 	$(call install-grub-theme,$(3)/fsroot,$(3)/fsroot/boot/grub/grub.cfg)
 
-	$(if $(filter vboxware,$(TARGET_DEVICE)),\
-		sed -i -E 's|(^\| )serial$$||g' $(3)/fsroot/boot/grub/grub.cfg)
-
 	$(call create-fat32image,$(1),$(3)/fsroot/EFI $(3)/fsroot/boot $(2),$(4))
 endef
 
