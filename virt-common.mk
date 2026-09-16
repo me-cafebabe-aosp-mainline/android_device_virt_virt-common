@@ -3,35 +3,18 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-# Defaults
-AB_OTA_UPDATER ?= true
-
 # Inherit from mainline/common
-ifeq ($(AB_OTA_UPDATER),true)
-TARGET_BOOT_HAL := grub
-endif
-TARGET_ENABLE_LOGCAT_TO_SERIAL := true
-TARGET_ENABLE_RECOVERY_ETHERNET_DHCP := true
-TARGET_ENABLE_VIRT_WIFI := true
-TARGET_GRAPHICS := mesa
-TARGET_HAS_BATTERY := false
-TARGET_HAS_VIBRATOR := false
-TARGET_HOSTAPD_AND_WPA_SUPPLICANT_FORM := apex-mainline_common
-TARGET_KEYMINT_HAL_DEFAULT_INSIDE_APEX := false # To save existing users from doing factory reset
-TARGET_LIGHT_HAL := none
-TARGET_MESA_ENABLE_SOFTWARE_RENDERER := true
-TARGET_SUPPORTS_SUSPEND := false
-TARGET_SUPPORTS_USB_ACCESSORY_MODE := false
-TARGET_USES_TABLET_INPUT_AS_TOUCHSCREEN := true
-include device/mainline/common/optional/options.mk
 $(call inherit-product, device/mainline/common/mainline_common.mk)
 
 VIRT_COMMON_PATH := device/virt/virt-common
 
 # A/B
+AB_OTA_UPDATER ?= true
 ifeq ($(AB_OTA_UPDATER),true)
 AB_OTA_POSTINSTALL_CONFIG += \
     FILESYSTEM_TYPE_system=ext4
+
+TARGET_BOOT_HAL := grub
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/launch_with_vendor_ramdisk.mk)
 $(call soong_config_set,VIRT_PREINSTALL_CHECK,AB_OTA_UPDATER,$(AB_OTA_UPDATER))
@@ -61,6 +44,16 @@ TARGET_SCREEN_WIDTH := 600
 TARGET_SCREEN_HEIGHT := 600
 endif
 
+# Debugging
+TARGET_ENABLE_LOGCAT_TO_SERIAL := true
+
+# Disable
+TARGET_HAS_BATTERY := false
+TARGET_HAS_VIBRATOR := false
+TARGET_LIGHT_HAL := none
+TARGET_SUPPORTS_SUSPEND := false
+TARGET_SUPPORTS_USB_ACCESSORY_MODE := false
+
 # Dynamic partitions
 PRODUCT_BUILD_SUPER_PARTITION := true
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
@@ -87,8 +80,10 @@ PRODUCT_PACKAGES += \
     shell_and_utilities_vendor_ramdisk \
     tune2fs.vendor_ramdisk
 
-# Graphics (Mesa)
+# Graphics
+TARGET_GRAPHICS := mesa
 TARGET_MESA_DO_NOT_SET_AS_DEFAULT := true
+TARGET_MESA_ENABLE_SOFTWARE_RENDERER := true
 
 # Graphics (Swiftshader)
 PRODUCT_PACKAGES += \
@@ -126,6 +121,8 @@ $(call soong_config_set,libinit,vendor_init_lib,//$(VIRT_COMMON_PATH):init_virt)
 # Input
 PRODUCT_COPY_FILES += \
     $(VIRT_COMMON_PATH)/configs/input/Generic.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/Generic.kl
+
+TARGET_USES_TABLET_INPUT_AS_TOUCHSCREEN := true
 
 # Images
 PRODUCT_USE_DYNAMIC_PARTITION_SIZE := true
@@ -221,8 +218,13 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     preinstall_check
 
+TARGET_ENABLE_RECOVERY_ETHERNET_DHCP := true
+
 # Scoped Storage
 $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
+
+# Security
+TARGET_KEYMINT_HAL_DEFAULT_INSIDE_APEX := false # To save existing users from doing factory reset
 
 # Sensors
 $(call soong_config_set_bool,sensors_hal_mainline,include_all_permission_xmls,true)
@@ -255,5 +257,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     CuttlefishTetheringOverlay \
     CuttlefishWifiOverlay
+
+TARGET_ENABLE_VIRT_WIFI := true
+TARGET_HOSTAPD_AND_WPA_SUPPLICANT_FORM := apex-mainline_common
 
 $(call soong_config_set_string_list,mainline_common_apex_wpa_supplicant,include_prebuilts,p2p_supplicant.conf.cf wpa_supplicant.conf.cf wpa_supplicant_overlay.conf.cf)
