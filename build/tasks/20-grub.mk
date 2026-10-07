@@ -28,8 +28,11 @@ GRUB_WORKDIR_ESP := $(GRUB_WORKDIR_BASE)/esp
 GRUB_WORKDIR_INSTALL := $(GRUB_WORKDIR_BASE)/install
 GRUB_WORKDIR_PERSIST := $(GRUB_WORKDIR_BASE)/persist
 
-ifeq ($(TARGET_GRUB_ARCH),x86_64-efi)
-    GRUB_MKSTANDALONE_FORMAT := x86_64-efi
+# EFI platforms whose GRUB tools are available for the build host
+GRUB_STANDALONE_ARCHES := arm64-efi i386-efi x86_64-efi
+
+ifneq ($(filter $(GRUB_STANDALONE_ARCHES),$(TARGET_GRUB_ARCH)),)
+    GRUB_MKSTANDALONE_FORMAT := $(TARGET_GRUB_ARCH)
 else
     ifeq ($(TARGET_GRUB_BOOT_EFI_PREBUILT),)
         $(error Please specify prebuilt GRUB EFI file)
@@ -63,7 +66,7 @@ endif
 # $(3): workdir
 # $(4): purpose (boot or install)
 # $(5): configuration files
-# $(6): prebuilt EFI file (optional for x86_64-efi)
+# $(6): prebuilt EFI file (optional for $(GRUB_STANDALONE_ARCHES))
 define make-espimage
 	mkdir -p $(3)/fsroot/EFI/BOOT $(3)/fsroot/boot/grub/fonts
 
@@ -110,7 +113,7 @@ endef
 
 ##### isoimage-boot #####
 
-ifeq ($(TARGET_GRUB_ARCH),x86_64-efi)
+ifneq ($(filter $(GRUB_STANDALONE_ARCHES),$(TARGET_GRUB_ARCH)),)
 ifneq ($(LINEAGE_BUILD),)
 
 INSTALLED_ISOIMAGE_BOOT_TARGET := $(PRODUCT_OUT)/$(BOOTMGR_ARTIFACT_FILENAME_PREFIX)-boot.iso
@@ -126,7 +129,7 @@ endif # TARGET_GRUB_ARCH
 
 ##### isoimage-install #####
 
-ifeq ($(TARGET_GRUB_ARCH),x86_64-efi)
+ifneq ($(filter $(GRUB_STANDALONE_ARCHES),$(TARGET_GRUB_ARCH)),)
 ifneq ($(LINEAGE_BUILD),)
 
 INSTALLED_ISOIMAGE_INSTALL_TARGET := $(PRODUCT_OUT)/$(BOOTMGR_ARTIFACT_FILENAME_PREFIX).iso
