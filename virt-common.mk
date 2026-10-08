@@ -74,6 +74,11 @@ TARGET_ENABLE_BOOTSPLASH := true
 
 $(call soong_config_set_bool,bootsplash,use_minimal_init_rc,true)
 
+ifneq ($(wildcard packages/apps/DisplayModes/Android.bp),)
+PRODUCT_PACKAGES += \
+    DisplayModes
+endif
+
 # Fastbootd
 PRODUCT_PACKAGES += \
     android.hardware.fastboot-service.virt_recovery
