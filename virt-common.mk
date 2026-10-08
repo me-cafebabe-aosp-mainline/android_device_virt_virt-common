@@ -242,6 +242,8 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
 TARGET_KEYMINT_HAL_DEFAULT_INSIDE_APEX := false # To save existing users from doing factory reset
 
 # Sensors
+TARGET_SENSORS_HAL_MAINLINE_VIRTUAL_BACKEND := true
+
 $(call soong_config_set_bool,sensors_hal_mainline,include_all_permission_xmls,true)
 
 # Soong namespaces
