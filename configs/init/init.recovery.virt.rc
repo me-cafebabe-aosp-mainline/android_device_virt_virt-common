@@ -22,10 +22,13 @@ on early-boot
     start vendor.boot-default
 
 on property:ro.boot.install=1 && property:vendor.create_partition_table.finish=1
+    wait /dev/block/by-name/persist
     exec u:r:flash_persist_partition:s0 -- /system/bin/sh -e /system/bin/flash_persist_partition.sh
     mount vfat /dev/block/by-name/persist /mnt/vendor/_persist rw sync shortname=lower uid=1000 gid=1000 dmask=007 fmask=117 context=u:object_r:persist_file:s0
 
 on property:ro.boot.install=1 && property:vendor.create_partition_table.start=1 && property:init.svc.create_partition_table=stopped
+    # Wait for partition symlinks to appear (specify the last non-slotted partition)
+    wait /dev/block/by-name/BIOS
     start preinstall_check
 
 on property:ro.boot.install=1 && property:vendor.preinstall_check.success=1

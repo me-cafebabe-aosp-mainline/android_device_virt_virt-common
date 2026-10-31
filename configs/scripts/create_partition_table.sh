@@ -12,6 +12,16 @@ fi
 
 which setprop > /dev/null && setprop vendor.create_partition_table.start 1
 
+wait_for_block_device() {
+    local dev="/dev/block/$1" timeout="${2:-30}"
+    while [ "$timeout" -gt 0 ]; do
+        [ -b "$dev" ] && return 0
+        sleep 0.1
+        timeout=$((timeout - 1))
+    done
+    return 1
+}
+
 if [ -e "${TARGET}2" ]; then
     HAVE_INITIAL_PARTITION_TABLE=1
 fi
@@ -65,6 +75,7 @@ if [ -f "/system/etc/MBR.img" ]; then
     dd if=/system/etc/MBR.img of=$TARGET bs=446 count=1
 fi
 
+wait_for_block_device by-name/super
 if [ -f "/system/etc/super_empty_raw.img" ] && ! dd if=/dev/block/by-name/super bs=256k count=1|strings|grep virt_dynamic_partitions > /dev/null; then
     dd if=/system/etc/super_empty_raw.img of=/dev/block/by-name/super
 fi
