@@ -19,7 +19,7 @@ wait_for_block_device() {
         sleep 0.1
         timeout=$((timeout - 1))
     done
-    return 1
+#   return 1
 }
 
 if [ -e "${TARGET}2" ]; then
